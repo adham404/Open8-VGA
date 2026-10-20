@@ -2,7 +2,9 @@
 
     /Applications/FreeCAD.app/Contents/MacOS/FreeCAD enclosure/render_views.py
 
-Reads enclosure/out/open8-vga-enclosure.FCStd and writes PNGs to enclosure/out/img/.
+Reads enclosure/out/open8-vga-enclosure.FCStd, writes PNGs to enclosure/out/img/, then
+saves the document with colours and a fitted isometric view (a file saved by the
+command-line build has no view state, so it would open with nothing in frame).
 Author: Adham Elshafei
 """
 import os
@@ -71,6 +73,14 @@ def run():
         shot("inside_top_off", (0.8, 0.9, -1.0), hidden=inside)
         shot("parts_print", (0.9, 1.1, -0.7),
              hidden=("ref_board", "ref_lcd_panel"))
+        # leave the document opening nicely in the GUI: everything shown, isometric, fitted
+        show(doc)
+        view = Gui.activeDocument().activeView()
+        view.viewIsometric()
+        view.fitAll()
+        Gui.updateGui()
+        doc.save()
+        log.write("saved the document with its view state\n")
     except Exception:
         import traceback
         log.write(traceback.format_exc())
