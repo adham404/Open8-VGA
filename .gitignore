@@ -23,3 +23,10 @@ kicad/heypcb_export/
 .DS_Store
 .vscode/
 .idea/
+
+# Enclosure build logs
+enclosure/out/progress.txt
+enclosure/out/freecad_console.txt
+enclosure/out/render_log.txt
+enclosure/out/error.txt
+enclosure/out/*.FCBak

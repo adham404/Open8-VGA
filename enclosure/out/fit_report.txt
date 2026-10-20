@@ -1,0 +1,32 @@
+board: tallest part 13.0 mm above the PCB; component face at X = 19.5 mm; board X 6.5-24.9, Y 27.5-340.5, Z 20.1-279.6
+
+printed parts (size X x Y x Z, mm):
+  shell_lower_front     250.0 x  169.0 x  120.0  fits  1 solid(s)
+  shell_lower_rear      250.0 x  170.0 x  120.0  fits  1 solid(s)
+  shell_upper_front     250.0 x  169.0 x  220.0  fits  1 solid(s)
+  shell_upper_rear      250.0 x  170.0 x  220.0  fits  1 solid(s)
+  bezel_upper           250.0 x   10.0 x  219.8  fits  1 solid(s)
+  bezel_chin            250.0 x    6.0 x  119.8  fits  1 solid(s)
+  panel_clamp           207.0 x    3.0 x  165.0  fits  1 solid(s)
+  controls_door           3.5 x   44.4 x  253.5  fits  1 solid(s)
+  driver_tray           150.0 x  100.0 x    3.0  fits  1 solid(s)
+all parts fit a 256 mm bed: True
+
+fit check (overlap volume, mm^3; must be 0):
+  ref_board      vs shell_lower_front         0.000
+  ref_board      vs shell_lower_rear          0.000
+  ref_board      vs shell_upper_front         0.000
+  ref_board      vs shell_upper_rear          0.000
+  ref_lcd_panel  vs shell_upper_front         0.000
+  ref_lcd_panel  vs bezel_upper               0.000
+
+hardware:
+   14  chin-line seam bolts M3x14 + heat-set inserts
+   18  mid-depth seam bolts M3x10 + heat-set inserts
+   18  bezel screws M3x10 + heat-set inserts
+    4  panel clamp screws M3x8 + heat-set inserts
+    4  driver tray screws M3x8 + heat-set inserts
+    8  door magnets 6x3 mm (4 in the door, 4 in the ledge)
+    4  rubber feet, 12 mm
+
+board gap to the left wall: 3.0 mm (tallest part)

@@ -31,6 +31,7 @@ Everything is verified in simulation; **no board has been built yet.**
 | PCB Rev A: 6 layers, routed, design-rule check clean, Gerbers | done, **not fabricated** | [08](docs/08-board.md) |
 | Parts list, assembly guide | done | [09](docs/09-assembly.md) |
 | Bring-up plan | written, not yet carried out | [10](docs/10-bring-up.md) |
+| Compact-Mac-style 3D-printed case with an 8" LCD (FreeCAD) | designed, fit-checked, **not printed** | [enclosure](enclosure/README.md) |
 
 ## Quick start
 
@@ -79,6 +80,7 @@ hardware/    design.py: the board netlist as code; gatesim.py: gate-level simula
              lib.py: chip models; kicad_map.py, bom.py; layout/: placement, routing and
              finishing scripts for the PCB; fab/: release fabrication files
 kicad/board/ KiCad project for the PCB
+enclosure/   3D-printed case: parametric FreeCAD script, STLs, renders
 tests/       CPU, assembler, video, keyboard, firmware, games, EEPROM, emulator and
              gate-level board tests
 ```
