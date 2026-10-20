@@ -1,0 +1,25 @@
+# Generated outputs (./build.sh recreates them). Release fabrication files live in
+# hardware/fab/ instead.
+build/
+
+# Python
+__pycache__/
+*.pyc
+
+# KiCad: local history, lock files, per-user editor state, caches, backups
+kicad/**/.history/
+*.lck
+*.kicad_prl
+fp-info-cache
+*-backups/
+_autosave-*
+
+# Local tools and scratch: the Freerouting download, the raw HeyPCB export
+tools/freerouting/
+kicad/heypcb_export/
+
+# Editor / OS
+.claude/
+.DS_Store
+.vscode/
+.idea/

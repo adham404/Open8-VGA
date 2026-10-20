@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "HeyPCB_LCSC")(type "KiCad")(uri "${KIPRJMOD}/heypcb-libs/HeyPCB_LCSC.kicad_sym")(options "")(descr ""))
+)

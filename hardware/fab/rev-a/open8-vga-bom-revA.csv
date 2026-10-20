@@ -1,0 +1,75 @@
+item,qty,refs,value,description,family,mpn,package,mount,socket,footprint,notes
+1,2,U73 U117,74HC00,quad 2-input NAND,HC,CD74HC00E,DIP-14 (300 mil),THT,recommended: 14-pin 300 mil,Package_DIP:DIP-14_W7.62mm,
+2,2,U20 U100,74HC02,quad 2-input NOR,HC,CD74HC02E,DIP-14 (300 mil),THT,recommended: 14-pin 300 mil,Package_DIP:DIP-14_W7.62mm,
+3,5,U6 U48 U82 U96 U124,74HC04,hex inverter,HC,CD74HC04E,DIP-14 (300 mil),THT,recommended: 14-pin 300 mil,Package_DIP:DIP-14_W7.62mm,
+4,1,U97,74HC05,"hex inverter, open drain",HC,SN74HC05N,DIP-14 (300 mil),THT,recommended: 14-pin 300 mil,Package_DIP:DIP-14_W7.62mm,open-drain output holds the PS/2 clock; must be HC05/LS05 type
+5,6,U4 U14 U68 U72 U83 U98,74HC08,quad 2-input AND,HC,CD74HC08E,DIP-14 (300 mil),THT,recommended: 14-pin 300 mil,Package_DIP:DIP-14_W7.62mm,
+6,2,U95 U123,74HC11,triple 3-input AND,HC,CD74HC11E,DIP-14 (300 mil),THT,recommended: 14-pin 300 mil,Package_DIP:DIP-14_W7.62mm,
+7,3,U75 U76 U77,74HC138,3-to-8 decoder,HC,CD74HC138E,DIP-16 (300 mil),THT,recommended: 16-pin 300 mil,Package_DIP:DIP-16_W7.62mm,
+8,2,U9 U91,74HC14,hex Schmitt inverter,HC,CD74HC14E,DIP-14 (300 mil),THT,recommended: 14-pin 300 mil,Package_DIP:DIP-14_W7.62mm,
+9,10,U28 U29 U59 U60 U61 U62 U63 U64 U65 U66,74HC153,dual 4-to-1 mux,HC,CD74HC153E,DIP-16 (300 mil),THT,recommended: 16-pin 300 mil,Package_DIP:DIP-16_W7.62mm,
+10,2,U23 U24,74HC154,"4-to-16 decoder (24-pin, 600 mil)",HC,CD74HC154E,DIP-24 (600 mil),THT,recommended: 24-pin 600 mil,Package_DIP:DIP-24_W15.24mm,
+11,4,U11 U70 U71 U74,74HC157,quad 2-to-1 mux,HC,CD74HC157E,DIP-16 (300 mil),THT,recommended: 16-pin 300 mil,Package_DIP:DIP-16_W7.62mm,
+12,5,U42 U43 U44 U45 U94,74HC161,"4-bit binary counter, async clear",HC,CD74HC161E,DIP-16 (300 mil),THT,recommended: 16-pin 300 mil,Package_DIP:DIP-16_W7.62mm,
+13,10,U21 U49 U50 U51 U52 U103 U104 U105 U106 U107,74HC163,"4-bit binary counter, sync clear",HC,CD74HC163E,DIP-16 (300 mil),THT,recommended: 16-pin 300 mil,Package_DIP:DIP-16_W7.62mm,
+14,2,U92 U93,74HC164,8-bit serial-in shift register,HC,CD74HC164E,DIP-14 (300 mil),THT,recommended: 14-pin 300 mil,Package_DIP:DIP-14_W7.62mm,
+15,3,U110 U111 U112,74HC283,4-bit adder,HC,CD74HC283E,DIP-16 (300 mil),THT,recommended: 16-pin 300 mil,Package_DIP:DIP-16_W7.62mm,
+16,7,U13 U25 U26 U27 U69 U86 U99,74HC32,quad 2-input OR,HC,CD74HC32E,DIP-14 (300 mil),THT,recommended: 14-pin 300 mil,Package_DIP:DIP-14_W7.62mm,
+17,13,U22 U30 U32 U34 U36 U37 U55 U56 U57 U78 U79 U80 U81,74HC377,octal register with enable,HC,CD74HC377E,DIP-20 (300 mil),THT,recommended: 20-pin 300 mil,Package_DIP:DIP-20_W7.62mm,
+18,12,U31 U33 U35 U46 U47 U53 U54 U58 U88 U89 U101 U102,74HC541,octal tri-state buffer,HC,CD74HC541E,DIP-20 (300 mil),THT,recommended: 20-pin 300 mil,Package_DIP:DIP-20_W7.62mm,
+19,2,U119 U126,74HC574,"octal D register, tri-state",HC,CD74HC574E,DIP-20 (300 mil),THT,recommended: 20-pin 300 mil,Package_DIP:DIP-20_W7.62mm,
+20,6,U8 U12 U15 U84 U85 U87,74HC74,dual D flip-flop,HC,CD74HC74E,DIP-14 (300 mil),THT,recommended: 14-pin 300 mil,Package_DIP:DIP-14_W7.62mm,
+21,2,U3 U113,74HC86,quad 2-input XOR,HC,CD74HC86E,DIP-14 (300 mil),THT,recommended: 14-pin 300 mil,Package_DIP:DIP-14_W7.62mm,
+22,2,U2 U130,74AC04,hex inverter,AC (timing-critical),CD74AC04E,DIP-14 (300 mil),THT,recommended: 14-pin 300 mil,Package_DIP:DIP-14_W7.62mm,clock / pixel-rate inverters; do not substitute HC
+23,2,U16 U131,74AC08,quad 2-input AND,AC (timing-critical),CD74AC08E,DIP-14 (300 mil),THT,recommended: 14-pin 300 mil,Package_DIP:DIP-14_W7.62mm,CPU clock gate / pixel and colour gating; do not substitute HC
+24,1,U67,74AC138,3-to-8 decoder,AC (timing-critical),CD74AC138E,DIP-16 (300 mil),THT,recommended: 16-pin 300 mil,Package_DIP:DIP-16_W7.62mm,"memory region decode: read margin 13 ns with HC, about 41 ns with AC; do not substitute HC"
+25,1,U128,74AC151,8-to-1 mux,AC (timing-critical),CD74AC151E,DIP-16 (300 mil),THT,recommended: 16-pin 300 mil,Package_DIP:DIP-16_W7.62mm,pixel select at the dot rate; do not substitute HC
+26,6,U114 U115 U116 U120 U121 U122,74AC157,quad 2-to-1 mux,AC (timing-critical),CD74AC157E,DIP-16 (300 mil),THT,recommended: 16-pin 300 mil,Package_DIP:DIP-16_W7.62mm,VRAM/font address mux on the CPU read path; do not substitute HC
+27,1,U1,74AC161,"4-bit binary counter, async clear",AC (timing-critical),CD74AC161E,DIP-16 (300 mil),THT,recommended: 16-pin 300 mil,Package_DIP:DIP-16_W7.62mm,dot counter at 25.175 MHz (74HC161 fMAX is 24 MHz at 85 C); do not substitute HC
+28,2,U118 U125,74AC245,octal bus transceiver,AC (timing-critical),CD74AC245E,DIP-20 (300 mil),THT,recommended: 20-pin 300 mil,Package_DIP:DIP-20_W7.62mm,VRAM/font data buffer on the CPU read path; do not substitute HC
+29,4,U5 U109 U127 U129,74AC574,"octal D register, tri-state",AC (timing-critical),CD74AC574E,DIP-20 (300 mil),THT,recommended: 20-pin 300 mil,Package_DIP:DIP-20_W7.62mm,"dot-rate registers (phase, timing, pixel); do not substitute HC"
+30,5,U17 U18 U19 U108 U200,SST39SF010A,"1 Mbit (128K x 8) flash, 70 ns",,SST39SF010A-70-4C-PHE,DIP-32 (600 mil),THT,required: 32-pin 600 mil,Package_DIP:DIP-32_W15.24mm_Socket,"U17 ucode0.bin; U18 ucode1.bin; U19 ucode2.bin; U108 vga_timing.bin; U200 firmware.bin. Socket is wired for the SST39SF040 pinout (A17/A18 low): 010A, 020A or 040 all fit"
+31,4,U38 U39 U40 U41,SST39SF040,"4 Mbit (512K x 8) flash, 70 ns",,SST39SF040-70-4C-PHE,DIP-32 (600 mil),THT,required: 32-pin 600 mil,Package_DIP:DIP-32_W15.24mm_Socket,"ALU ROMs; U38 alu_r0.bin, U39 alu_r1.bin, U40 alu_f0.bin, U41 alu_f1.bin. Long lead time: order first"
+32,1,U90,25LC512,64 KiB SPI EEPROM,,25LC512-I/P,DIP-8 (300 mil),THT,recommended: 8-pin 300 mil,Package_DIP:DIP-8_W7.62mm,
+33,1,U201,AS6C62256,"32K x 8 SRAM, 55 ns (28-pin, 600 mil)",,AS6C62256-55PCN,DIP-28 (600 mil),THT,recommended: 28-pin 600 mil,Package_DIP:DIP-28_W15.24mm,
+34,2,U202 U203,AS6C6264,"8K x 8 SRAM, 55 ns (28-pin, 600 mil)",,AS6C6264-55PCN,DIP-28 (600 mil),THT,recommended: 28-pin 600 mil,Package_DIP:DIP-28_W15.24mm,
+35,1,U7,MCP130-450,"reset supervisor, open drain, TO-92",,MCP130-450DI/TO,TO-92_Inline,THT,,Package_TO_SOT_THT:TO-92_Inline,design note says MCP130T-450I/TO; the TO-92 part is MCP130-450DI/TO
+36,1,U10,NE555,timer,,NE555P,DIP-8 (300 mil),THT,recommended: 8-pin 300 mil,Package_DIP:DIP-8_W7.62mm,
+37,1,X1,25.175MHz,"25.175 MHz 5 V full-can oscillator, DIP-14 outline",,ECS-100A-251.7,Oscillator_DIP-14,THT,optional: 14-pin 300 mil (4 corner pins used),Oscillator:Oscillator_DIP-14,pin 1 = sharp corner of the can
+38,134,C1 C2 C7 C8 C9 C10 C11 C12 C13 C14 C15 C16 C17 C18 C19 C20 C21 C22 C23 C24 C25 C26 C27 C28 C29 C30 C31 C32 C33 C34 C35 C36 C37 C38 C39 C40 C41 C42 C43 C44 C45 C46 C47 C48 C49 C50 C51 C52 C53 C54 C55 C56 C57 C58 C59 C60 C61 C62 C63 C64 C65 C66 C67 C68 C69 C70 C71 C72 C73 C74 C75 C76 C77 C78 C79 C80 C81 C82 C83 C84 C85 C86 C87 C88 C89 C90 C91 C92 C93 C94 C95 C96 C97 C98 C99 C100 C101 C102 C103 C104 C105 C106 C107 C108 C109 C110 C111 C112 C113 C114 C115 C116 C117 C118 C119 C120 C121 C122 C123 C124 C125 C126 C127 C128 C129 C130 C131 C132 C133 C134 C135 C136 C137 C138,100n,"ceramic capacitor, 50 V X7R (C0G for 10n/47n fine), 5 mm lead pitch",,,C_Disc_D5.0mm_W2.5mm_P5.00mm,THT,,Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm,"132 are decoupling (one per logic package, C7-C138); C1, C2 debounce the STEP and CONTINUE buttons"
+39,1,C4,10n,"ceramic capacitor, 50 V X7R (C0G for 10n/47n fine), 5 mm lead pitch",,,C_Disc_D5.0mm_W2.5mm_P5.00mm,THT,,Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm,
+40,1,C3,1u,"ceramic capacitor, 50 V X7R (C0G for 10n/47n fine), 5 mm lead pitch",,,C_Disc_D5.0mm_W2.5mm_P5.00mm,THT,,Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm,
+41,1,C6,470u,"aluminium electrolytic, >= 10 V, 10 mm dia, 5 mm pitch",,,CP_Radial_D10.0mm_P5.00mm,THT,,Capacitor_THT:CP_Radial_D10.0mm_P5.00mm,bulk on VCC; mind polarity
+42,1,C5,47n,"ceramic capacitor, 50 V X7R (C0G for 10n/47n fine), 5 mm lead pitch",,,C_Disc_D5.0mm_W2.5mm_P5.00mm,THT,,Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm,
+43,2,R17 R18,100,"resistor, 1/4 W metal film 1 %, axial",,,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,THT,,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,HSYNC/VSYNC series resistors
+44,6,R1 R5 R6 R11 R13 R15,10k,"resistor, 1/4 W metal film 1 %, axial",,,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,THT,,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,"pull-ups/pull-downs (RSTRAW_N, HALF_EN, MCBANK, COLEN_R/G/B)"
+45,4,R4 R7 R21 R22,1k,"resistor, 1/4 W metal film 1 %, axial",,,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,THT,,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,"555 timing, buzzer base, LED series"
+46,2,R8 R9,4.7k,"resistor, 1/4 W metal film 1 %, axial",,,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,THT,,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,PS/2 CLK and DATA pull-ups
+47,3,R12 R14 R16,470,"resistor, 1/4 W metal film 1 %, axial",,,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,THT,,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,R/G/B DAC into the monitor's 75 ohm: about 0.69 V full scale
+48,3,R2 R3 R10,47k,"resistor, 1/4 W metal film 1 %, axial",,,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,THT,,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,"button debounce pull-ups, PS/2 timeout RC"
+49,2,R19 R20,5.1k,"resistor, 1/4 W metal film 1 %, axial",,,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,THT,,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,USB-C CC pull-downs (5 V sink)
+50,2,RN1 RN2,10k,"resistor network, 8 resistors bussed, SIP-9",,Bourns 4609X-101-103LF,R_Array_SIP9,THT,,Resistor_THT:R_Array_SIP9,"pin 1 (dot) is the common pin, to VCC"
+51,1,RV1,1M,"trimmer 3/8 in square, top adjust",,Bourns 3386P-1-105LF,Potentiometer_Bourns_3386P_Vertical,THT,,Potentiometer_THT:Potentiometer_Bourns_3386P_Vertical,
+52,1,D1,1N4148,"small-signal diode, DO-35",,1N4148,D_DO-35_SOD27_P7.62mm_Horizontal,THT,,Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal,cathode (band) to KCLK
+53,2,D3 D4,PWR / HALT,LED 3 mm,,,LED_D3.0mm,THT,,LED_THT:LED_D3.0mm,"D3 power, D4 HALT (lit while the CPU is halted); pad 1 = cathode"
+54,1,D2,SMBJ5.0A,"TVS diode 5 V unidirectional, SMB (surface mount)",,SMBJ5.0A,D_SMB,SMD,,Diode_SMD:D_SMB,cathode (band) to VCC
+55,1,Q1,2N3904,"NPN transistor, TO-92 (E-B-C)",,2N3904,TO-92_Inline,THT,,Package_TO_SOT_THT:TO-92_Inline,flat face per silkscreen; E = pad 1 (GND)
+56,1,F1,200mA,"PTC resettable fuse, 1812 (surface mount)",,MF-MSMF020-2,Fuse_1812_4532Metric,SMD,,Fuse:Fuse_1812_4532Metric,"F2 = main 5 V input, F1 = keyboard supply"
+57,1,F2,2A,"PTC resettable fuse, 1812 (surface mount)",,MF-MSMF200-2,Fuse_1812_4532Metric,SMD,,Fuse:Fuse_1812_4532Metric,"F2 = main 5 V input, F1 = keyboard supply"
+58,3,SW1 SW4 SW5,RESET / STEP / CONTINUE,"tactile switch 6 x 6 mm, THT",,,SW_PUSH_6mm,THT,,Button_Switch_THT:SW_PUSH_6mm,"SW1 RESET, SW4 STEP, SW5 CONTINUE"
+59,2,SW2 SW3,RUN/STEP / STEP/SLOW,"slide switch SPDT, THT",,C&K OS102011MS2QN1,SW_Slide_SPDT_Straight_CK_OS102011MS2Q,THT,,Button_Switch_THT:SW_Slide_SPDT_Straight_CK_OS102011MS2Q,"SW2 RUN/STEP, SW3 STEP/SLOW"
+60,5,JP1 JP2 JP3 JP4 JP5,HALF / MCBANK / COL_R / COL_G / COL_B,"pin header 1x02, 2.54 mm",,,PinHeader_1x02_P2.54mm_Vertical,THT,,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,JP1 fit = half-speed CPU; JP2 fit = microcode bank 1; JP3-JP5 fit = colour on
+61,1,BZ1,piezo,"piezo transducer 12 mm, 7.6 mm pitch (passive, driven by Q1)",,,Buzzer_12x9.5RM7.6,THT,,Buzzer_Beeper:Buzzer_12x9.5RM7.6,
+62,1,J5,EXPANSION,"pin header 2x20, 2.54 mm",,,PinHeader_2x20_P2.54mm_Vertical,THT,,Connector_PinHeader_2.54mm:PinHeader_2x20_P2.54mm_Vertical,J5 expansion
+63,1,J4,LOGIC,"pin header 2x20, 2.54 mm",,,PinHeader_2x20_P2.54mm_Vertical,THT,,Connector_PinHeader_2.54mm:PinHeader_2x20_P2.54mm_Vertical,J4 logic-analyser header
+64,1,J1,PS/2,"6-pin mini-DIN socket (PS/2), THT",,MD-60SM,DC-IN-TH_MD-60SM,THT,,HeyPCB_LCSC:DC-IN-TH_MD-60SM,
+65,1,J3,USB-C power,"USB-C receptacle, power only 6P (SMD pads + THT shell tabs)",,GCT USB4125-GF-A,USB_C_Receptacle_GCT_USB4125-xx-x_6P_TopMnt_Horizontal,SMD + THT,,Connector_USB:USB_C_Receptacle_GCT_USB4125-xx-x_6P_TopMnt_Horizontal,5 V input; shell tabs are plated holes
+66,1,J2,VGA,"DE-15 HD socket (VGA), right angle, THT",,,DSUB-15-HD_Socket_Horizontal_P2.29x1.90mm_EdgePinOffset3.03mm_Housed_MountingHolesOffset4.94mm,THT,,Connector_Dsub:DSUB-15-HD_Socket_Horizontal_P2.29x1.90mm_EdgePinOffset3.03mm_Housed_MountingHolesOffset4.94mm,
+67,9,U17 U18 U19 U38 U39 U40 U41 U108 U200,socket DIP-32,IC socket 32-pin 600 mil (required),,Mill-Max 110-43-632-41-001000 (example),DIP-32 (600 mil),THT,required,,flash chips are programmed off-board
+68,3,U201 U202 U203,socket DIP-28,IC socket 28-pin 600 mil (recommended),,Mill-Max 110-43-628-41-001000 (example),DIP-28 (600 mil),THT,recommended,,lets the board be brought up in stages (docs/10-bring-up.md)
+69,2,U23 U24,socket DIP-24,IC socket 24-pin 600 mil (recommended),,Mill-Max 110-43-624-41-001000 (example),DIP-24 (600 mil),THT,recommended,,lets the board be brought up in stages (docs/10-bring-up.md)
+70,33,U5 U22 U30 U31 U32 U33 U34 U35 U36 U37 U46 U47 U53 U54 U55 U56 U57 U58 U78 U79 U80 U81 U88 U89 U101 U102 U109 U118 U119 U125 U126 U127 U129,socket DIP-20,IC socket 20-pin 300 mil (recommended),,Mill-Max 110-43-320-41-001000 (example),DIP-20 (300 mil),THT,recommended,,lets the board be brought up in stages (docs/10-bring-up.md)
+71,44,U1 U11 U21 U28 U29 U42 U43 U44 U45 U49 U50 U51 U52 U59 U60 U61 U62 U63 U64 U65 U66 U67 U70 U71 U74 U75 U76 U77 U94 U103 U104 U105 U106 U107 U110 U111 U112 U114 U115 U116 U120 U121 U122 U128,socket DIP-16,IC socket 16-pin 300 mil (recommended),,Mill-Max 110-43-316-41-001000 (example),DIP-16 (300 mil),THT,recommended,,lets the board be brought up in stages (docs/10-bring-up.md)
+72,41,U2 U3 U4 U6 U8 U9 U12 U13 U14 U15 U16 U20 U25 U26 U27 U48 U68 U69 U72 U73 U82 U83 U84 U85 U86 U87 U91 U92 U93 U95 U96 U97 U98 U99 U100 U113 U117 U123 U124 U130 U131,socket DIP-14,IC socket 14-pin 300 mil (recommended),,Mill-Max 110-43-314-41-001000 (example),DIP-14 (300 mil),THT,recommended,,lets the board be brought up in stages (docs/10-bring-up.md)
+73,2,U10 U90,socket DIP-8,IC socket 8-pin 300 mil (recommended),,Mill-Max 110-43-308-41-001000 (example),DIP-8 (300 mil),THT,recommended,,lets the board be brought up in stages (docs/10-bring-up.md)
+74,5,JP1 JP2 JP3 JP4 JP5,shunt 2.54 mm,"jumper shunt, 2.54 mm",,,,,,,"default: JP3-JP5 fitted (white), JP1 and JP2 open; see docs/09-assembly.md"

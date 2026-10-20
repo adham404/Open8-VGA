@@ -1,0 +1,288 @@
+<title>Open8-VGA Emulator</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>
+/* Layout: the page is the machine's front panel - a solder-mask board carrying the
+   monitor, silkscreen labels and tactile key switches. One committed dark look. */
+:root {
+  --mask: #0f2a22;          /* solder mask */
+  --mask-deep: #0a1d17;
+  --copper: #c9925a;        /* exposed copper / gold pads */
+  --silk: #e8efe9;          /* silkscreen white */
+  --silk-dim: #9fb3a8;
+  --led: #ffb000;           /* amber status LED */
+  --bezel: #1b1f1d;
+  --screen-bg: #020604;
+  --f-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body {
+  background: var(--mask-deep);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(201,146,90,0.10) 1px, transparent 1.5px);
+  background-size: 18px 18px;
+  color: var(--silk);
+  font-family: var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 28px;
+}
+.board {
+  max-width: 980px; margin: 0 auto;
+  display: grid; gap: 18px;
+}
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 18px; }
+h1 {
+  margin: 0; font-family: var(--f-display); font-weight: 700; letter-spacing: 0.06em;
+  font-size: clamp(26px, 4.4vw, 40px); text-transform: uppercase; text-wrap: balance;
+}
+h1 span { color: var(--copper); }
+.ref { font-family: var(--f-mono); font-size: 12px; color: var(--silk-dim); letter-spacing: 0.04em; }
+
+.monitor {
+  background: var(--bezel); border-radius: 14px; padding: clamp(10px, 2.2vw, 22px);
+  box-shadow: inset 0 0 0 1px #2c322f, 0 10px 30px rgba(0,0,0,0.45);
+  position: relative;
+}
+.crt {
+  position: relative; background: var(--screen-bg); border-radius: 8px; overflow: hidden;
+  aspect-ratio: 4 / 3; max-width: 100%;
+}
+canvas#screen {
+  width: 100%; height: 100%; display: block; image-rendering: pixelated; outline: none;
+}
+.crt::after {               /* faint scanlines */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,0) 2px, rgba(0,0,0,0.18) 3px);
+}
+.focus-hint {
+  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+  font-family: var(--f-mono); font-size: 12px; background: rgba(15,42,34,0.92); color: var(--silk);
+  border: 1px solid var(--copper); padding: 6px 12px; border-radius: 4px; pointer-events: none;
+}
+.monitor-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 10px; flex-wrap: wrap; }
+.status { font-family: var(--f-mono); font-size: 12px; color: var(--silk-dim); font-variant-numeric: tabular-nums; display: flex; gap: 14px; flex-wrap: wrap; }
+.led { display: inline-flex; align-items: center; gap: 6px; }
+.led i { width: 9px; height: 9px; border-radius: 50%; background: #3a2b0a; box-shadow: inset 0 0 0 1px #5a4517; }
+.led.on i { background: var(--led); box-shadow: 0 0 8px var(--led); }
+
+.panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.group { border: 1px solid rgba(232,239,233,0.28); border-radius: 6px; padding: 14px 14px 16px; position: relative; }
+.group h2 {
+  position: absolute; top: -9px; left: 10px; margin: 0; padding: 0 6px; background: var(--mask-deep);
+  font-family: var(--f-display); font-weight: 500; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--silk);
+}
+.keys { display: flex; flex-wrap: wrap; gap: 10px; }
+.sw { display: grid; justify-items: center; gap: 5px; }
+.sw small { font-family: var(--f-mono); font-size: 10px; color: var(--silk-dim); letter-spacing: 0.06em; }
+button.cap {
+  font-family: var(--f-display); font-weight: 700; font-size: 15px; letter-spacing: 0.06em;
+  min-width: 52px; height: 40px; padding: 0 12px; border-radius: 5px; cursor: pointer;
+  color: #1a1d1b; background: linear-gradient(#f2f4f1, #c9cec9); border: 0;
+  box-shadow: 0 0 0 2px var(--copper), 0 3px 0 2px #6b4a28, 0 5px 10px rgba(0,0,0,0.4);
+  transition: transform 60ms, box-shadow 60ms;
+}
+button.cap:active, button.cap.down { transform: translateY(2px); box-shadow: 0 0 0 2px var(--copper), 0 1px 0 2px #6b4a28; }
+button.cap.red { background: linear-gradient(#e2574c, #a8322a); color: var(--silk); }
+button.cap:focus-visible, select:focus-visible { outline: 2px solid var(--led); outline-offset: 3px; }
+.row { display: flex; gap: 14px; flex-wrap: wrap; align-items: end; }
+label.opt { display: grid; gap: 5px; font-family: var(--f-mono); font-size: 10px; color: var(--silk-dim); letter-spacing: 0.06em; text-transform: uppercase; }
+select {
+  font-family: var(--f-mono); font-size: 13px; background: var(--mask); color: var(--silk);
+  border: 1px solid var(--copper); border-radius: 4px; height: 34px; padding: 0 8px;
+}
+.notes { display: grid; gap: 8px; font-size: 14px; line-height: 1.55; color: var(--silk); max-width: 66ch; }
+.notes p { margin: 0; }
+kbd { font-family: var(--f-mono); font-size: 12px; border: 1px solid var(--silk-dim); border-bottom-width: 2px; border-radius: 3px; padding: 0 4px; color: var(--silk); }
+.notes ol { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+footer { font-family: var(--f-mono); font-size: 11px; color: var(--silk-dim); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+@media (prefers-reduced-motion: reduce) { button.cap { transition: none; } }
+</style>
+
+<div class="board">
+  <header>
+    <h1>Open8<span>-</span>VGA</h1>
+    <div class="ref">U1 CPU &middot; 32 KiB SRAM &middot; 640&times;480 VGA &middot; PS/2 &middot; designed by Adham Elshafei</div>
+  </header>
+
+  <section class="monitor" aria-label="Monitor">
+    <div class="crt">
+      <canvas id="screen" width="640" height="480" tabindex="0" aria-label="Open8-VGA screen. Click, then type."></canvas>
+      <div class="focus-hint" id="hint">Click the screen, then use your keyboard</div>
+    </div>
+    <div class="monitor-foot">
+      <div class="status">
+        <span class="led on" id="led-pwr"><i></i>PWR</span>
+        <span class="led" id="led-halt"><i></i>HALT</span>
+        <span id="mhz">&mdash; MHz</span>
+        <span id="pc">PC $0000</span>
+      </div>
+      <div class="status"><span>J1 VGA</span><span>J2 PS/2</span><span>U_EE 25LC512</span></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="group">
+      <h2>SW &middot; Function keys</h2>
+      <div class="keys">
+        <div class="sw"><button class="cap" data-key="F1">F1</button><small>HELP</small></div>
+        <div class="sw"><button class="cap" data-key="F2">F2</button><small>ASSEMBLE</small></div>
+        <div class="sw"><button class="cap" data-key="F3">F3</button><small>RUN</small></div>
+        <div class="sw"><button class="cap" data-key="F4">F4</button><small>SAVE</small></div>
+        <div class="sw"><button class="cap" data-key="F5">F5</button><small>EXAMPLES</small></div>
+        <div class="sw"><button class="cap" data-key="F6">F6</button><small>LOAD</small></div>
+        <div class="sw"><button class="cap" data-key="F9">F9</button><small>NEW</small></div>
+        <div class="sw"><button class="cap" data-key="Escape">ESC</button><small>BACK</small></div>
+      </div>
+    </div>
+    <div class="group">
+      <h2>Game pad</h2>
+      <div class="keys">
+        <div class="sw"><button class="cap" data-key="ArrowLeft" aria-label="Left">&#9664;</button><small>LEFT</small></div>
+        <div class="sw"><button class="cap" data-key="ArrowRight" aria-label="Right">&#9654;</button><small>RIGHT</small></div>
+        <div class="sw"><button class="cap" data-key="ArrowUp" aria-label="Up">&#9650;</button><small>UP</small></div>
+        <div class="sw"><button class="cap" data-key="ArrowDown" aria-label="Down">&#9660;</button><small>DOWN</small></div>
+        <div class="sw"><button class="cap" data-key="Space">SPACE</button><small>DROP/JUMP</small></div>
+        <div class="sw"><button class="cap" data-key="Enter">ENTER</button><small>OK</small></div>
+        <div class="sw"><button class="cap" data-key="KeyY">Y</button><small>YES</small></div>
+      </div>
+    </div>
+    <div class="group">
+      <h2>Board</h2>
+      <div class="row">
+        <div class="sw"><button class="cap red" id="reset">RESET</button><small>SW1 &middot; TEXT KEPT</small></div>
+        <div class="sw"><button class="cap" id="power">POWER</button><small>CLEARS RAM, KEEPS EEPROM</small></div>
+        <label class="opt" for="tint">Phosphor
+          <select id="tint"><option value="green">Green</option><option value="amber">Amber</option><option value="white">White</option></select>
+        </label>
+        <label class="opt" for="speed">Clock
+          <select id="speed"><option value="1">3.15 MHz (real)</option><option value="4">4&times; turbo</option><option value="16">16&times; turbo</option></select>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <section class="group">
+    <h2>Play the games</h2>
+    <div class="notes">
+      <ol>
+        <li>Click the screen and press any key to leave the welcome screen.</li>
+        <li>Press <kbd>F5</kbd>, then <kbd>7</kbd>, then <kbd>Y</kbd>: the Tetris source loads into the editor.</li>
+        <li>Press <kbd>F3</kbd>. The machine assembles the 12 KB listing itself (about 5 s at real speed, or pick 16&times; turbo) and starts the game.</li>
+        <li><kbd>&#9664;</kbd> <kbd>&#9654;</kbd> move, <kbd>&#9650;</kbd> rotate, <kbd>&#9660;</kbd> soft drop, <kbd>Space</kbd> hard drop, <kbd>P</kbd> pause, <kbd>Esc</kbd> quit back to the editor.</li>
+      </ol>
+      <p>For the scrolling platformer, load example <kbd>8</kbd> the same way: <kbd>&#9664;</kbd> <kbd>&#9654;</kbd> run, <kbd>Space</kbd> jump, stomp the walkers and reach the flag.</p>
+      <p>Everything runs on an emulation of the actual boot ROM: the editor, the on-board assembler and the game are Open8 machine code. <kbd>F1</kbd> opens the built-in manual. Your program text stays in this browser between visits, the way SRAM survives a RESET. <kbd>F4</kbd> saves a program to one of four EEPROM slots and <kbd>F6</kbd> loads it back; the EEPROM survives POWER, as on the real board.</p>
+    </div>
+  </section>
+
+  <footer><span>Open8-VGA &middot; open-source 8-bit computer from 74HC logic</span><span>Firmware build {{BUILD}}</span></footer>
+</div>
+
+<script>
+{{CORE}}
+</script>
+<script>
+(function () {
+  "use strict";
+  const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+  const FLASH = b64("{{FIRMWARE_B64}}");
+  const ISA = {{ISA_JSON}};
+  const CYCLES = b64("{{CYCLES_B64}}");
+  const KEYMAP = {{KEYMAP_JSON}};       // KeyboardEvent.code -> [extended, set-2 code]
+  const TINTS = { green: [51, 255, 102], amber: [255, 176, 0], white: [235, 240, 236] };
+  const BG = [2, 6, 4];
+  const SAVE_KEY = "open8vga.sram.v1";
+  const EE_KEY = "open8vga.eeprom.v1";
+
+  const sys = new O8.System(FLASH, ISA, CYCLES);
+  const canvas = document.getElementById("screen");
+  const ctx = canvas.getContext("2d");
+  const img = ctx.createImageData(640, 480);
+  const hint = document.getElementById("hint");
+  const mhzEl = document.getElementById("mhz"), pcEl = document.getElementById("pc");
+  const haltLed = document.getElementById("led-halt");
+  let tint = TINTS.green, speed = 1;
+
+  // SRAM survives between visits (like a battery-backed board): the firmware then warm-boots
+  try {
+    const saved = localStorage.getItem(SAVE_KEY);
+    if (saved) { const d = b64(saved); if (d.length === 0x8000) sys.m.sram.set(d); }
+  } catch (e) { /* storage unavailable: start cold */ }
+  try {
+    const ee = localStorage.getItem(EE_KEY);
+    if (ee) { const d = b64(ee); if (d.length === 0x10000) sys.m.eeprom.mem.set(d); }
+  } catch (e) { /* no saved EEPROM: it starts erased */ }
+  const toB64 = (arr) => {
+    let s = "";
+    for (let i = 0; i < arr.length; i += 0x2000) s += String.fromCharCode.apply(null, arr.subarray(i, i + 0x2000));
+    return btoa(s);
+  };
+  function saveRam() {
+    try {
+      localStorage.setItem(SAVE_KEY, toB64(sys.m.sram));
+      if (sys.m.eeprom.dirty) { localStorage.setItem(EE_KEY, toB64(sys.m.eeprom.mem)); sys.m.eeprom.dirty = false; }
+    } catch (e) { /* ignore */ }
+  }
+  setInterval(saveRam, 4000);
+  addEventListener("pagehide", saveRam);
+
+  function send(code, up) {
+    const k = KEYMAP[code];
+    if (!k) return false;
+    const bytes = [];
+    if (k[0]) bytes.push(0xE0);
+    if (up) bytes.push(0xF0);
+    bytes.push(k[1]);
+    sys.m.kb.typeBytes(bytes, sys.m.now);
+    return true;
+  }
+  canvas.addEventListener("keydown", (e) => { if (send(e.code, false)) e.preventDefault(); });
+  canvas.addEventListener("keyup", (e) => { if (send(e.code, true)) e.preventDefault(); });
+  canvas.addEventListener("focus", () => { hint.hidden = true; });
+  canvas.addEventListener("blur", () => { hint.hidden = false; });
+  canvas.addEventListener("pointerdown", () => canvas.focus());
+
+  document.querySelectorAll("button[data-key]").forEach((b) => {
+    const code = b.dataset.key;
+    const press = (e) => { e.preventDefault(); b.classList.add("down"); send(code, false); };
+    const release = () => { if (b.classList.contains("down")) { b.classList.remove("down"); send(code, true); } };
+    b.addEventListener("pointerdown", press);
+    b.addEventListener("pointerup", release);
+    b.addEventListener("pointerleave", release);
+    b.addEventListener("click", (e) => { if (e.detail === 0) { send(code, false); send(code, true); } });
+  });
+  document.getElementById("reset").addEventListener("click", () => { sys.reset(); canvas.focus(); });
+  document.getElementById("power").addEventListener("click", () => {
+    sys.m.sram.fill(0); sys.m.vram.fill(0); sys.m.eeprom.powerCycle(); sys.reset(); saveRam(); canvas.focus();
+  });
+  document.getElementById("tint").addEventListener("change", (e) => { tint = TINTS[e.target.value]; });
+  document.getElementById("speed").addEventListener("change", (e) => { speed = +e.target.value; });
+
+  let last = performance.now(), acc = 0, cycCount = 0, lastRate = performance.now();
+  function frame(t) {
+    const dt = Math.min(100, t - last); last = t;
+    acc += dt * 3146.875 * speed;                 // cycles owed at 3.147 MHz x speed
+    const budgetEnd = performance.now() + 24;
+    while (acc >= 1000 && performance.now() < budgetEnd) {
+      const n = Math.min(acc, 20000);
+      sys.run(n); acc -= n; cycCount += n;
+    }
+    if (acc > 200000) acc = 0;                    // falling behind: drop, don't spiral
+    sys.render(img.data, tint, BG);
+    ctx.putImageData(img, 0, 0);
+    if (t - lastRate > 500) {
+      mhzEl.textContent = (cycCount / ((t - lastRate) * 1000)).toFixed(2) + " MHz";
+      pcEl.textContent = "PC $" + sys.cpu.pc.toString(16).toUpperCase().padStart(4, "0");
+      haltLed.classList.toggle("on", sys.cpu.halted);
+      cycCount = 0; lastRate = t;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
