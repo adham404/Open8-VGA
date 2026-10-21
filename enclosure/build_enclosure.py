@@ -62,10 +62,6 @@ P = dict(
     TRAY=(150.0, 100.0), TRAY_POS=(60.0, 25.0), TRAY_POST_H=12.0,
     # back panel extras
     DC_JACK_D=11.2, DC_JACK_POS=(210.0, 60.0),
-    # LCD kit's menu keypad: its board slides down into a holder on the inside of the back
-    # panel, buttons facing a window in the wall (measure yours: board size, and the height
-    # of the buttons above the board)
-    KEYPAD_PCB=(80.0, 20.0, 1.6), KEYPAD_SW=5.0, KEYPAD_POS=(125.0, 50.0),   # (X, Z) centre
     PS2_OPEN=1.5,                   # PS/2 opening: margin around J1's body for the plug's overmould
     INSERT_D=4.0, INSERT_DEPTH=5.0, CLEAR_D=3.4,
     # mid-depth join: the front and rear halves are built separately, then pulled together
@@ -366,15 +362,6 @@ def shell(info, g, board):
     m = PS2_OPEN
     cuts.append(box(xb - h - m, D - T - BACK_GAP - 1, zj0 - m, xb, D + 1, zj1 + m))
     cuts.append(box(xb - h - 3, D - 2.0, zj0 - 3, xb + 3, D + 1, zj1 + 3))
-    # menu-keypad holder: two grooved posts standing on the base, and a window to press
-    # the buttons through
-    x0, x1, z0, z1, yp = keypad_box()
-    posts = [box(x0 - 3.0, yp - 3.0, T - 0.1, x0 + 2.0, D - T + 0.1, z1 + 2.0),
-             box(x1 - 2.0, yp - 3.0, T - 0.1, x1 + 3.0, D - T + 0.1, z1 + 2.0)]
-    s = fuse([s] + posts)
-    for gx0, gx1 in ((x0 - 0.3, x0 + 2.1), (x1 - 2.1, x1 + 0.3)):   # open at the top
-        cuts.append(box(gx0, yp - 0.2, z0 - 0.2, gx1, yp + KEYPAD_PCB[2] + 0.2, z1 + 5.0))
-    cuts.append(rbox_y(x0 + 4.0, D - T - 1, z0 + 3.0, x1 - 4.0, D + 1, z1 - 3.0, 2.0))
     # VGA loop slot (a short VGA cable from J2 comes back in to the LCD driver board)
     _, zj2 = pcb_to_case(info, 0, 190.0)
     cuts.append(rbox_y(xb + 6, D - T - 1, zj2 - 7, xb + 40, D + 1, zj2 + 7, 6.9))
@@ -490,23 +477,6 @@ def quarters(s):
     return q
 
 
-def keypad_box():
-    """Menu keypad board: X and Z extent, and Y of its back face."""
-    (kw, kh, kt), (kx, kz) = KEYPAD_PCB, KEYPAD_POS
-    yp = D - T - KEYPAD_SW - kt
-    return kx - kw / 2, kx + kw / 2, kz - kh / 2, kz + kh / 2, yp
-
-
-def keypad():
-    """The keypad board with a row of 6 x 6 mm buttons, as a reference model."""
-    x0, x1, z0, z1, yp = keypad_box()
-    kt = KEYPAD_PCB[2]
-    zc = (z0 + z1) / 2
-    btns = [box(x - 3, yp + kt, zc - 3, x + 3, yp + kt + KEYPAD_SW, zc + 3)
-            for x in spaced(x0 + 6, x1 - 6, 12)]
-    return Part.makeCompound([box(x0, yp, z0, x1, yp + kt, z1)] + btns)
-
-
 def ps2_plug(info):
     """A keyboard plug in J1: 13 mm round moulding, 25 mm of it, plus the cable."""
     (x0, x1, y0, y1), h = STAND_INS["J1"]
@@ -544,8 +514,7 @@ def main():
     parts = dict(quarters(sh))
     parts.update(bezel_upper=upper_bezel, bezel_chin=chin, panel_clamp=frame,
                  controls_door=door(info), driver_tray=tray())
-    refs = dict(ref_board=board, ref_lcd_panel=panel, ref_rods=rods(), ref_ps2_plug=ps2_plug(info),
-                ref_keypad=keypad())
+    refs = dict(ref_board=board, ref_lcd_panel=panel, ref_rods=rods(), ref_ps2_plug=ps2_plug(info))
 
     say("\nprinted parts (size X x Y x Z, mm):")
     ok = True
