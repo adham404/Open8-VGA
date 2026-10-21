@@ -23,7 +23,7 @@ PLATINUM = (0.90, 0.88, 0.82)
 COLORS = {"ref_board": (0.10, 0.42, 0.20), "ref_lcd_panel": (0.06, 0.07, 0.08),
           "controls_door": (0.86, 0.83, 0.76), "panel_clamp": (0.35, 0.35, 0.38),
           "driver_tray": (0.35, 0.35, 0.38), "ref_rods": (0.55, 0.56, 0.60),
-          "ref_ps2_plug": (0.42, 0.24, 0.55)}
+          "ref_ps2_plug": (0.42, 0.24, 0.55), "ref_keypad": (0.10, 0.42, 0.20)}
 
 
 def setup():

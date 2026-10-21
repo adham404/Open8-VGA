@@ -24,6 +24,7 @@ fit check (overlap volume, mm^3; must be 0):
   ref_rods       vs shell_upper_front         0.000
   ref_rods       vs shell_upper_rear          0.000
   ref_ps2_plug   vs shell_lower_rear          0.000
+  ref_keypad     vs shell_lower_rear          0.000
   shell_lower_front vs shell_lower_rear          0.000
   shell_lower_front vs shell_upper_front         0.000
   shell_lower_front vs shell_upper_rear          0.000

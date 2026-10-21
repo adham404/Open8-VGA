@@ -14,7 +14,7 @@ Author: Adham Elshafei. **Status: designed and fit-checked in CAD only; not yet 
 | Screen | 8" 800 × 600, 4:3 (see below), behind a recessed bezel |
 | Board | stands upright on the left wall, components facing out, held top and bottom in printed card-guide rails (Rev A has no mounting holes) |
 | Controls | a removable magnetic door in the left wall opens onto the board's control strip: RESET, STEP, CONTINUE, both slide switches, all jumpers, the slow-clock trimmer, the PWR/HALT LEDs and the logic-analyser and expansion headers |
-| Ports | back panel: VGA, USB-C power and PS/2 keyboard openings in line with the board's connectors, a slot for the VGA loop cable, a 12 V jack for the display. The keyboard plugs straight into J1 from the back (J1's opening sits 4.2 mm in from the board edge, too close to the wall for a cable inside) |
+| Ports | back panel: VGA, USB-C power and PS/2 keyboard openings in line with the board's connectors, a slot for the VGA loop cable, a 12 V jack for the display, and a window onto the display's menu keypad (for brightness and the VGA Auto adjust). The keyboard plugs straight into J1 from the back (J1's opening sits 4.2 mm in from the board edge, too close to the wall for a cable inside) |
 | Printing | 9 parts, every one fits a 256 × 256 × 256 mm bed, none needs supports |
 
 | Inside | Back (ports) | Controls door off |
@@ -117,11 +117,14 @@ are notched wherever a tall part needs room.
    from inside). LCD: foam tape on the bezel pocket, panel in, clamp frame on (M3 × 8).
    Driver board on the tray (slots fit most hole patterns), tray onto its posts (M3 × 8).
 4. **Rear half.** Bolt the rear upper quarter onto the rear lower quarter (chin line,
-   M3 × 14, reached through the open front). Fit the 12 V jack in the back panel.
+   M3 × 14, reached through the open front). Fit the 12 V jack in the back panel. Slide
+   the LCD kit's menu keypad down into its holder behind the back-panel window, buttons
+   facing out, and plug its ribbon cable in.
 5. Slide the board into the rear half's rails from the front, connectors through the back
    panel.
 6. Wiring, while the halves are still apart: VGA from J2 out of the back panel, back in
-   through the loop slot, to the driver board; 12 V jack to the driver board. Leave the
+   through the loop slot, to the driver board; 12 V jack and keypad ribbon to the driver
+   board. Leave the
    cables that cross the seam slack enough to reach.
 7. Slide the front half on: its rails take the front of the board, and the rear half's
    tongue goes into the front half's rebate. Push the four rods in from the back panel,
@@ -136,6 +139,11 @@ apart.
 
 * The LCD drawing (above) and the driver board's size (the tray takes up to about
   110 × 90 mm).
+* The menu keypad that comes with your LCD kit: set `KEYPAD_PCB` (board size, assumed
+  80 × 20 × 1.6 mm) and `KEYPAD_SW` (button height above the board, assumed 5 mm for
+  6 × 6 mm tact switches) so the buttons sit just behind the window, and check its ribbon
+  reaches the chin (about 250 mm; extend it if not). The window's top edge is a 72 mm
+  bridge when printing; tidy any sag with a file.
 * Your keyboard's PS/2 plug: the board lies under the plug, so its moulding can be at most
   13 mm thick across the board (most are 12–13 mm round); the opening allows 16 × 18.4 mm.
 * The 3D models for the PS/2 jack (J1) and trimmer (RV1) are stand-in boxes; KiCad has no
