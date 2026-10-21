@@ -66,6 +66,13 @@ P = dict(
     # board right behind it); panel-mount mini-DIN extension, check yours
     KBD_POS=(40.0, 40.0), KBD_HOLE_D=15.0, KBD_EAR=13.5,
     INSERT_D=4.0, INSERT_DEPTH=5.0, CLEAR_D=3.4,
+    # mid-depth join: the front and rear halves are built separately, then pulled together
+    # by 4 M3 rods from the back panel into inserts in the front half; a lap-joint tongue
+    # on the rear half aligns the walls
+    ROD_PTS=((35.0, 8.5), (35.0, 331.5), (215.0, 8.5), (215.0, 331.5)),   # (X, Z)
+    ROD_BOSS_D=10.0, ROD_BOSS_LEN=18.0, ROD_BORE_D=3.6, ROD_CBORE_D=8.0,
+    TONGUE=(1.9, 3.4, 5.0),         # tongue: from / to inset from the outside, length
+    TONGUE_GAP=0.2,                 # rebate clearance around the tongue
 )
 globals().update(P)
 
@@ -293,11 +300,17 @@ def shell(info, g, board):
     for pts in ([(D - T, zc - lt - lp), (D - T, zc), (D - T - lp, zc), (D - T - lp, zc - lt)],
                 [(D - T, zc), (D - T - lp, zc), (D - T - lp, zc + lt), (D - T, zc + lt + lp)]):
         adds.append(prism_x(pts, T, W - T))
-    # vertical seam lips at Y_SPLIT (left, right, top, base)
+    # rod bosses (front half) and tubes (rear half): one column per rod, from the front
+    # boss to the back wall, on a web down to the base / up to the top (no overhang)
     ys = Y_SPLIT
-    yring = cut(rbox_y(T, ys - lt, T, W - T, ys + lt, H - T, R - T),
-                [rbox_y(T + lp, ys - lt - 1, T + lp, W - T - lp, ys + lt + 1, H - T - lp, 2)])
-    adds.append(yring)
+    rb = ROD_BOSS_D / 2
+    for x, z in ROD_PTS:
+        y0 = ys - ROD_BOSS_LEN
+        adds.append(cyl_y(x, z, rb, y0, D - T + 0.1))
+        if z < H / 2:
+            adds.append(box(x - rb, y0, T - 0.1, x + rb, D - T + 0.1, z))
+        else:
+            adds.append(box(x - rb, y0, z, x + rb, D - T + 0.1, H - T + 0.1))
     # card-guide rails for the board
     xb = info["xb"]
     rx0, rx1 = xb - RAIL_CHEEK, xb + PCB_T + RAIL_CHEEK
@@ -315,8 +328,7 @@ def shell(info, g, board):
     s = fuse([s] + adds)
     # seam bolts: inserts in the lower / front lip, clearance in the other one
     holes = []
-    n_y_seam = 0
-    for y in spaced(BZ + 20, D - T - 20, 55):
+    for y in spaced(BZ + 20, ys - 12, 50) + spaced(ys + 12, D - T - 20, 50):   # clear of the split
         for x in (T + 4.5, W - T - 4.5):
             holes.append(cyl_z(x, y, INSERT_D / 2, zc - INSERT_DEPTH, zc + 0.1))
             holes.append(cyl_z(x, y, CLEAR_D / 2, zc, zc + lt + lp + 2))
@@ -324,17 +336,15 @@ def shell(info, g, board):
         y = D - T - 4.5
         holes.append(cyl_z(x, y, INSERT_D / 2, zc - INSERT_DEPTH, zc + 0.1))
         holes.append(cyl_z(x, y, CLEAR_D / 2, zc, zc + lt + lp + 2))
-    ylip_pts = [(x, T + 4.5) for x in spaced(T + 20, W - T - 20, 55)] + \
-               [(x, H - T - 4.5) for x in spaced(T + 20, W - T - 20, 55)] + \
-               [(T + 4.5, z) for z in spaced(T + 20, H - T - 20, 55)] + \
-               [(W - T - 4.5, z) for z in spaced(T + 20, H - T - 20, 55)]
-    for x, z in ylip_pts:
-        n_y_seam += 1
-        holes.append(cyl_y(x, z, INSERT_D / 2, ys - INSERT_DEPTH, ys + 0.1))
-        holes.append(cyl_y(x, z, CLEAR_D / 2, ys, ys + lt + 1))
     cuts += holes
-    HARDWARE["chin-line seam bolts M3x14 + heat-set inserts"] = len(holes) // 2 - n_y_seam
-    HARDWARE["mid-depth seam bolts M3x10 + heat-set inserts"] = n_y_seam
+    HARDWARE["chin-line seam bolts M3x14 + heat-set inserts"] = len(holes) // 2
+    # rods: insert in the front boss, bore through the rear tube and back wall, counterbore
+    # for the washer and acorn nut on the back face
+    for x, z in ROD_PTS:
+        cuts.append(cyl_y(x, z, INSERT_D / 2, ys - INSERT_DEPTH - 1, ys + 0.1))
+        cuts.append(cyl_y(x, z, ROD_BORE_D / 2, ys, D + 1))
+        cuts.append(cyl_y(x, z, ROD_CBORE_D / 2, D - 1.0, D + 1))
+    HARDWARE["join rods M3 x 180 mm (threaded rod) + washer + acorn nut + heat-set insert"] = len(ROD_PTS)
     # back panel: port cut-outs from the board model, with a 2 mm recess outside
     for sol in board.Solids:
         bb = sol.BoundBox
@@ -347,7 +357,7 @@ def shell(info, g, board):
     cuts.append(rbox_y(xb + 6, D - T - 1, zj2 - 7, xb + 40, D + 1, zj2 + 7, 6.9))
     cuts.append(cyl_y(DC_JACK_POS[0], DC_JACK_POS[1], DC_JACK_D / 2, D - T - 1, D + 1))
     # vents: base and top, toward the back
-    for x in spaced(60, W - 30, 12):
+    for x in spaced(60, W - 60, 12):     # between the rod tubes
         cuts.append(rbox_x(x - 2, 215, -1, x + 2, 315, T + 1, 1.9) if False else
                     box(x - 2, 215, -1, x + 2, 315, T + 1))
         cuts.append(box(x - 2, 215, H - T - 1, x + 2, 315, H + 1))
@@ -434,13 +444,37 @@ def tray():
 
 
 # ---------------------------------------------------------------- split and check
+def wall_band(i0, i1, y0, y1):
+    """The part of the side / top / base walls between insets i0 and i1 from the outside."""
+    return rbox_y(i0, y0, i0, W - i0, y1, H - i0, R - i0).cut(
+        rbox_y(i1, y0 - 1, i1, W - i1, y1 + 1, H - i1, R - i1))
+
+
 def quarters(s):
+    """Split the shell at the chin line and at Y_SPLIT. The rear quarters keep a tongue of
+    wall reaching forward into a rebate in the front quarters (a lap joint: the outside
+    stays one surface, the inside lines up)."""
     big = 1000.0
+    ys = Y_SPLIT
+    i0, i1, tl = TONGUE
+    gap = TONGUE_GAP
+    tongue = s.common(wall_band(i0, i1, ys - tl, ys + 0.1))
+    rebate = wall_band(i0 - gap, i1 + gap, ys - tl - gap, ys + 1)
     q = {}
     for zn, (za, zb) in (("lower", (-1, Z_CHIN)), ("upper", (Z_CHIN, H + 1))):
-        for yn, (ya, yb) in (("front", (-1, Y_SPLIT)), ("rear", (Y_SPLIT, D + 1))):
-            q["shell_%s_%s" % (zn, yn)] = s.common(box(-big, ya, za, big, yb, zb)).removeSplitter()
+        zbox = box(-big, -big, za, big, big, zb)
+        front = cut(s.common(box(-big, -1, za, big, ys, zb)), [rebate])
+        rear = s.common(box(-big, ys, za, big, D + 1, zb))
+        rear = fuse([rear, tongue.common(zbox)])
+        q["shell_%s_front" % zn] = front
+        q["shell_%s_rear" % zn] = rear
     return q
+
+
+def rods():
+    """The 4 join rods with their acorn nuts, as one reference model."""
+    return Part.makeCompound([cyl_y(x, z, 1.5, Y_SPLIT - INSERT_DEPTH, D + 4) for x, z in ROD_PTS] +
+                             [cyl_y(x, z, 3.0, D, D + 4) for x, z in ROD_PTS])
 
 
 def main():
@@ -465,7 +499,7 @@ def main():
     parts = dict(quarters(sh))
     parts.update(bezel_upper=upper_bezel, bezel_chin=chin, panel_clamp=frame,
                  controls_door=door(info), driver_tray=tray())
-    refs = dict(ref_board=board, ref_lcd_panel=panel)
+    refs = dict(ref_board=board, ref_lcd_panel=panel, ref_rods=rods())
 
     say("\nprinted parts (size X x Y x Z, mm):")
     ok = True
@@ -485,6 +519,11 @@ def main():
                 continue
             v = sum(r_s.common(p).Volume for r_s in check_solids(r) if r_s.BoundBox.intersect(p.BoundBox))
             say("  %-14s vs %-20s %10.3f" % (rname, name, v))
+    shells = [n for n in parts if n.startswith("shell_")]
+    for i, a in enumerate(shells):          # the tongue must sit in its rebate, not in it
+        for b in shells[i + 1:]:
+            if parts[a].BoundBox.intersect(parts[b].BoundBox):
+                say("  %-14s vs %-20s %10.3f" % (a, b, parts[a].common(parts[b]).Volume))
     HARDWARE["bezel screws M3x10 + heat-set inserts"] = len(front_lip_screws())
     HARDWARE["panel clamp screws M3x8 + heat-set inserts"] = 4
     HARDWARE["driver tray screws M3x8 + heat-set inserts"] = 4
