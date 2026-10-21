@@ -14,7 +14,7 @@ Author: Adham Elshafei. **Status: designed and fit-checked in CAD only; not yet 
 | Screen | 8" 800 × 600, 4:3 (see below), behind a recessed bezel |
 | Board | stands upright on the left wall, components facing out, held top and bottom in printed card-guide rails (Rev A has no mounting holes) |
 | Controls | a removable magnetic door in the left wall opens onto the board's control strip: RESET, STEP, CONTINUE, both slide switches, all jumpers, the slow-clock trimmer, the PWR/HALT LEDs and the logic-analyser and expansion headers |
-| Ports | back panel: VGA, USB-C power and PS/2 cut-outs (measured from the board model), a slot for the VGA loop cable, a 12 V jack for the display; keyboard extension socket on the right wall |
+| Ports | back panel: VGA, USB-C power and PS/2 keyboard openings in line with the board's connectors, a slot for the VGA loop cable, a 12 V jack for the display. The keyboard plugs straight into J1 from the back (J1's opening sits 4.2 mm in from the board edge, too close to the wall for a cable inside) |
 | Printing | 9 parts, every one fits a 256 × 256 × 256 mm bed, none needs supports |
 
 | Inside | Back (ports) | Controls door off |
@@ -87,7 +87,6 @@ are notched wherever a tall part needs room.
 | 1 | 8" 800 × 600 LCD kit with a VGA driver board and 12 V adapter (above) |
 | 1 | VGA cable, male–male, about 30 cm, ideally with one right-angle plug |
 | 1 | panel-mount 5.5 × 2.1 mm DC jack (11 mm hole) for the display's 12 V |
-| 1 | PS/2 extension, mini-DIN 6 female panel-mount to male, about 30 cm (check its hole: 15 mm with ears at ±13.5 mm assumed) |
 | 46 | M3 brass heat-set inserts, 5 mm long, for 4.0 mm holes |
 | 16 | M3 × 14 bolts (chin-line seam) |
 | 18 | M3 × 10 bolts (bezel) |
@@ -122,9 +121,8 @@ are notched wherever a tall part needs room.
 5. Slide the board into the rear half's rails from the front, connectors through the back
    panel.
 6. Wiring, while the halves are still apart: VGA from J2 out of the back panel, back in
-   through the loop slot, to the driver board; 12 V jack to the driver board; PS/2
-   extension from J1 to the right-wall socket. Leave the cables that cross the seam
-   slack enough to reach.
+   through the loop slot, to the driver board; 12 V jack to the driver board. Leave the
+   cables that cross the seam slack enough to reach.
 7. Slide the front half on: its rails take the front of the board, and the rear half's
    tongue goes into the front half's rebate. Push the four rods in from the back panel,
    thread them into the front inserts, then a washer and acorn nut on each; tighten evenly
@@ -138,7 +136,8 @@ apart.
 
 * The LCD drawing (above) and the driver board's size (the tray takes up to about
   110 × 90 mm).
-* The panel-mount PS/2 socket's hole and ear spacing.
+* Your keyboard's PS/2 plug: the board lies under the plug, so its moulding can be at most
+  13 mm thick across the board (most are 12–13 mm round); the opening allows 16 × 18.4 mm.
 * The 3D models for the PS/2 jack (J1) and trimmer (RV1) are stand-in boxes; KiCad has no
   model for them. Leave a little extra room around them, or measure the real parts.
 * Print one chin-line seam corner, a short test of the tongue and rebate (`TONGUE_GAP`,

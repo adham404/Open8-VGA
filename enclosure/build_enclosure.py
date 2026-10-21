@@ -62,9 +62,7 @@ P = dict(
     TRAY=(150.0, 100.0), TRAY_POS=(60.0, 25.0), TRAY_POST_H=12.0,
     # back panel extras
     DC_JACK_D=11.2, DC_JACK_POS=(210.0, 60.0),
-    # keyboard extension socket on the right wall, front and low (the left wall has the
-    # board right behind it); panel-mount mini-DIN extension, check yours
-    KBD_POS=(40.0, 40.0), KBD_HOLE_D=15.0, KBD_EAR=13.5,
+    PS2_OPEN=1.5,                   # PS/2 opening: margin around J1's body for the plug's overmould
     INSERT_D=4.0, INSERT_DEPTH=5.0, CLEAR_D=3.4,
     # mid-depth join: the front and rear halves are built separately, then pulled together
     # by 4 M3 rods from the back panel into inserts in the front half; a lap-joint tongue
@@ -144,6 +142,14 @@ def spaced(a, b, pitch):
 
 
 # ---------------------------------------------------------------- the board
+# parts KiCad has no 3D model for: PCB courtyard (x0, x1 from the connector edge, y0, y1
+# down from the top) and height
+STAND_INS = {
+    "J1": ((4.2, 17.8, 220.8, 236.2), 13.0),    # MD-60SM PS/2 jack, opening toward the edge
+    "RV1": ((31.3, 41.4, 19.2, 29.3), 10.0),    # Bourns 3386P trimmer
+}
+
+
 def load_board():
     """Board STEP placed in case coordinates, plus stand-ins for parts KiCad has no 3D
     model for. Returns (shape, placement info)."""
@@ -159,12 +165,8 @@ def load_board():
     m.A11, m.A12, m.A13, m.A14 = 0, 0, -1, xb + PCB_T
     m.A21, m.A22, m.A23, m.A24 = -1, 0, 0, yb
     m.A31, m.A32, m.A33, m.A34 = 0, 1, 0, z_bt
-    stand_ins = [  # PCB courtyard (x0, x1, y0, y1) and height
-        ("J1", (4.2, 17.8, 220.8, 236.2), 13.0),   # MD-60SM PS/2 jack
-        ("RV1", (31.3, 41.4, 19.2, 29.3), 10.0),   # Bourns 3386P trimmer
-    ]
     parts = [raw]
-    for _, (x0, x1, y0, y1), h in stand_ins:
+    for (x0, x1, y0, y1), h in STAND_INS.values():
         parts.append(box(x0, -y1, PCB_T, x1, -y0, PCB_T + h))
     shape = Part.makeCompound(parts)
     shape = shape.transformGeometry(m)
@@ -352,6 +354,14 @@ def shell(info, g, board):
             m = 1.0
             cuts.append(box(bb.XMin - m, D - T - 1, bb.ZMin - m, min(bb.XMax + m, xb), D + 1, bb.ZMax + m))
             cuts.append(box(bb.XMin - 3, D - 2.0, bb.ZMin - 3, min(bb.XMax + 3, xb + 3), D + 1, bb.ZMax + 3))
+    # PS/2 (J1): its opening sits 4.2 mm in from the board edge, so the plug comes in
+    # through the back panel; the opening and recess clear the plug's moulding
+    (x0, x1, y0, y1), h = STAND_INS["J1"]
+    yj, zj0 = pcb_to_case(info, x1, y1)
+    _, zj1 = pcb_to_case(info, x0, y0)
+    m = PS2_OPEN
+    cuts.append(box(xb - h - m, D - T - BACK_GAP - 1, zj0 - m, xb, D + 1, zj1 + m))
+    cuts.append(box(xb - h - 3, D - 2.0, zj0 - 3, xb + 3, D + 1, zj1 + 3))
     # VGA loop slot (a short VGA cable from J2 comes back in to the LCD driver board)
     _, zj2 = pcb_to_case(info, 0, 190.0)
     cuts.append(rbox_y(xb + 6, D - T - 1, zj2 - 7, xb + 40, D + 1, zj2 + 7, 6.9))
@@ -364,10 +374,6 @@ def shell(info, g, board):
     # rubber-foot pockets
     for x, y in ((25, BZ + 25), (W - 25, BZ + 25), (25, D - 25), (W - 25, D - 25)):
         cuts.append(cyl_z(x, y, 6.2, -1, 1.0))
-    # keyboard extension socket on the right wall (front, low)
-    ky, kz = KBD_POS
-    cuts.append(cyl_x(ky, kz, KBD_HOLE_D / 2, W - T - 1, W + 1))
-    cuts += [cyl_x(ky, kz + s_, CLEAR_D / 2 - 0.2, W - T - 1, W + 1) for s_ in (-KBD_EAR, KBD_EAR)]
     # driver-board tray posts (inserts) in the chin
     tx, ty = TRAY_POS
     tw, td = TRAY
@@ -471,6 +477,15 @@ def quarters(s):
     return q
 
 
+def ps2_plug(info):
+    """A keyboard plug in J1: 13 mm round moulding, 25 mm of it, plus the cable."""
+    (x0, x1, y0, y1), h = STAND_INS["J1"]
+    yj, z0 = pcb_to_case(info, x0, y1)
+    _, z1 = pcb_to_case(info, x0, y0)
+    x, z = info["xb"] - h / 2, (z0 + z1) / 2
+    return Part.makeCompound([cyl_y(x, z, 6.5, yj + 0.5, yj + 25), cyl_y(x, z, 2.5, yj + 25, D + 60)])
+
+
 def rods():
     """The 4 join rods with their acorn nuts, as one reference model."""
     return Part.makeCompound([cyl_y(x, z, 1.5, Y_SPLIT - INSERT_DEPTH, D + 4) for x, z in ROD_PTS] +
@@ -499,7 +514,7 @@ def main():
     parts = dict(quarters(sh))
     parts.update(bezel_upper=upper_bezel, bezel_chin=chin, panel_clamp=frame,
                  controls_door=door(info), driver_tray=tray())
-    refs = dict(ref_board=board, ref_lcd_panel=panel, ref_rods=rods())
+    refs = dict(ref_board=board, ref_lcd_panel=panel, ref_rods=rods(), ref_ps2_plug=ps2_plug(info))
 
     say("\nprinted parts (size X x Y x Z, mm):")
     ok = True

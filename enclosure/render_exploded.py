@@ -25,7 +25,7 @@ OFFSETS = {
     "panel_clamp": (0, FRONT - 60, 40), "ref_lcd_panel": (0, FRONT - 100, 40),
     "shell_lower_rear": (0, REAR, 0), "shell_upper_rear": (0, REAR, 40),
     "ref_board": (-150, 0, 20), "controls_door": (-110, REAR, 20),
-    "ref_rods": (0, REAR + 220, 20),
+    "ref_rods": (0, REAR + 220, 20), "ref_ps2_plug": (-150, 60, 20),
 }
 
 
