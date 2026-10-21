@@ -78,6 +78,14 @@ are notched wherever a tall part needs room.
 adapter; choose it without the touch panel; similar kits are on AliExpress). Not the
 ER-TFTV080-1 (800 × 480) or the HDMI-only kits, which have no VGA input.
 
+The **menu keypad** is a small separate board of 5–7 buttons that comes with the kit (the
+listing's "keyboard" and its ribbon cable) and plugs into the driver board's KEY header.
+Check the kit's photos show it. If yours is missing, a replacement must match the driver
+board's key header (pin count and order vary between boards), for example this
+[5-key LCD control button board with a 10-pin ribbon](https://aws.robu.in/product/7-inch-lcd-control-button-board-with-compatible-with-10-pin-ribbon-cable)
+(check its pinout against your driver board first). Keypads for these boards are often
+about 82 × 17 mm; measure yours and set `KEYPAD_PCB` to match.
+
 * Outline 183.0 × 141.0 × 5.6 mm, active area 162.0 × 121.5 mm, 4:3.
 * Why: it is the commonly available 4:3 8" panel that ships with a VGA driver board.
   Native 640 × 480 LED-backlit panels exist (Mitsubishi AA084VJ11 class) but are hard to
