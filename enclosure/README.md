@@ -87,7 +87,7 @@ ER-TFTV080-1 (800 × 480) or the HDMI-only kits, which have no VGA input.
 
 | Qty | Part |
 |---|---|
-| 1 | 8" 800 × 600 LCD kit with a VGA driver board, its menu keypad and a 12 V 2 A adapter ([BuyDisplay ER-TFTV080-2](https://www.buydisplay.com/8-inch-tft-lcd-display-800x600-touchscreen-with-vga-video-hdmi-driver-board), see above) |
+| 1 | 8" 800 × 600 LCD kit with a VGA driver board and a 12 V 2 A adapter ([BuyDisplay ER-TFTV080-2](https://www.buydisplay.com/8-inch-tft-lcd-display-800x600-touchscreen-with-vga-video-hdmi-driver-board), see above) |
 | 1 | VGA cable, male–male, about 30 cm, ideally with one right-angle plug |
 | 1 | panel-mount 5.5 × 2.1 mm DC jack (11 mm hole) for the display's 12 V |
 | 46 | M3 brass heat-set inserts, 5 mm long, for 4.0 mm holes |
