@@ -72,8 +72,11 @@ are notched wherever a tall part needs room.
 ## The LCD panel
 
 **8" 800 × 600 TFT, Innolux AT080TN52-class**, sold as a kit with a VGA/HDMI driver board
-(for example BuyDisplay's 8" 800 × 600 kit with VGA, HDMI and AV inputs, about US$47 with a
-12 V adapter; similar kits are on AliExpress).
+(for example BuyDisplay's
+[ER-TFTV080-2](https://www.buydisplay.com/8-inch-tft-lcd-display-800x600-touchscreen-with-vga-video-hdmi-driver-board),
+800 × 600 with VGA, HDMI and AV inputs, about US$47 plus about US$3 for the 12 V 2 A
+adapter; choose it without the touch panel; similar kits are on AliExpress). Not the
+ER-TFTV080-1 (800 × 480) or the HDMI-only kits, which have no VGA input.
 
 * Outline 183.0 × 141.0 × 5.6 mm, active area 162.0 × 121.5 mm, 4:3.
 * Why: it is the commonly available 4:3 8" panel that ships with a VGA driver board.
@@ -88,7 +91,7 @@ are notched wherever a tall part needs room.
 
 | Qty | Part |
 |---|---|
-| 1 | 8" 800 × 600 LCD kit with a VGA driver board and 12 V adapter (above) |
+| 1 | 8" 800 × 600 LCD kit with a VGA driver board, its menu keypad and a 12 V 2 A adapter ([BuyDisplay ER-TFTV080-2](https://www.buydisplay.com/8-inch-tft-lcd-display-800x600-touchscreen-with-vga-video-hdmi-driver-board), see above) |
 | 1 | VGA cable, male–male, about 30 cm, ideally with one right-angle plug |
 | 1 | panel-mount 5.5 × 2.1 mm DC jack (11 mm hole) for the display's 12 V |
 | 46 | M3 brass heat-set inserts, 5 mm long, for 4.0 mm holes |
