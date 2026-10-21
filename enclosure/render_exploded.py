@@ -26,7 +26,7 @@ OFFSETS = {
     "shell_lower_rear": (0, REAR, 0), "shell_upper_rear": (0, REAR, 40),
     "ref_board": (-150, 0, 20), "controls_door": (-110, REAR, 20),
     "ref_rods": (0, REAR + 220, 20), "ref_ps2_plug": (-150, 60, 20),
-    "ref_keypad": (0, REAR, 110),           # lifted out of its holder
+    "ref_keypad": (0, REAR - 60, 20),
 }
 
 

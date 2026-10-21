@@ -37,14 +37,14 @@ def setup():
     return doc
 
 
-def show(doc, hidden=(), only=()):
+def show(doc, hidden=()):
     for o in doc.Objects:
-        o.ViewObject.Visibility = o.Name in only if only else o.Name not in hidden
+        o.ViewObject.Visibility = o.Name not in hidden
 
 
-def shot(name, direction, up=(0, 0, 1), hidden=(), only=()):
+def shot(name, direction, up=(0, 0, 1), hidden=()):
     doc = FreeCAD.ActiveDocument
-    show(doc, hidden, only)
+    show(doc, hidden)
     view = Gui.activeDocument().activeView()
     view.viewIsometric()
     # point the camera along `direction` with Z up
@@ -72,8 +72,6 @@ def run():
         shot("front", (0, 1, 0))
         shot("left_door_off", (1.0, -0.6, -0.35), hidden=("controls_door",))
         shot("inside_top_off", (0.8, 0.9, -1.0), hidden=inside)
-        shot("keypad_holder", (-0.35, 1.0, -0.8),                   # inside the back panel
-             only=("shell_lower_rear", "ref_keypad"))
         shot("parts_print", (0.9, 1.1, -0.7),
              hidden=("ref_board", "ref_lcd_panel"))
         # leave the document opening nicely in the GUI: everything shown, isometric, fitted
