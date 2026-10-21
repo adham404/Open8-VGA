@@ -21,6 +21,10 @@ Author: Adham Elshafei. **Status: designed and fit-checked in CAD only; not yet 
 |---|---|---|
 | ![](out/img/inside_top_off.png) | ![](out/img/rear_left.png) | ![](out/img/left_door_off.png) |
 
+| Menu keypad holder (inside the back panel, upper quarter and front half hidden) |
+|---|
+| ![](out/img/keypad_holder.png) |
+
 ## How the parts go together
 
 ![Exploded view](out/img/exploded.png)
